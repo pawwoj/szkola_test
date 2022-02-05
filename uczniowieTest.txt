@@ -1,0 +1,10 @@
+IDucznia;nazwisko;imie;ulica;dom;IDklasy
+1;Zaczynska;Danuta;Daleka;42;1a
+2;Berdysow;Marian;Wyzwolenia;80;1a
+3;Byczkowska;Ewa;Daleka;83;1a
+341;Szukana;Edyta;Kiedrzynska;32;3c
+342;Korepta;Anna;Bardzodaleka;11;3c
+345;Sulkowska;Ewa;Mickiewicza;18;3c
+554;Najlepszy;Ten;Kiedrzynska;32;2b
+42;Dwa;Franek;Bardzodaleka;11;2b
+45;Trzy;Adam;Mickiewicza;18;2b

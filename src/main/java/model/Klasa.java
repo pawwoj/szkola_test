@@ -10,10 +10,7 @@ import java.util.Scanner;
 public class Klasa {
     private static final List<Klasa> extension = new ArrayList<>();
     private final List<Uczen> uczenList = new ArrayList<>();
-    private String idKlasy;
-
-    public Klasa() {
-    }
+    private final String idKlasy;
 
     public Klasa(String idKlasy) {
         this.idKlasy = idKlasy;
@@ -28,16 +25,8 @@ public class Klasa {
         return extension;
     }
 
-    public List<Uczen> getUczenList() {
-        return uczenList;
-    }
-
-    public String getIdKlasy() {
-        return idKlasy;
-    }
-
-    public static void readFromFile() {
-        try (Scanner fileScanner = new Scanner(new File("uczniowie.txt"))) {
+    public static void readFromFile(String fileName) {
+        try (Scanner fileScanner = new Scanner(new File(fileName))) {
             fileScanner.nextLine();
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
@@ -48,6 +37,14 @@ public class Klasa {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Uczen> getUczenList() {
+        return uczenList;
+    }
+
+    public String getIdKlasy() {
+        return idKlasy;
     }
 
     @Override

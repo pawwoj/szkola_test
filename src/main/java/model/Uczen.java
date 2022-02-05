@@ -9,15 +9,12 @@ import java.util.Scanner;
 public class Uczen {
     private static final List<Uczen> extension = new ArrayList<>();
     private final List<Ocena> ocenaList = new ArrayList<>();
-    private String idUcznia;
-    private String nazwisko;
-    private String imie;
-    private String ulica;
-    private String dom;
-    private Klasa klasa;
-
-    public Uczen() {
-    }
+    private final String idUcznia;
+    private final String nazwisko;
+    private final String imie;
+    private final String ulica;
+    private final String dom;
+    private final Klasa klasa;
 
     public Uczen(String idUcznia, String nazwisko, String imie, String ulica, String dom, Klasa klasa) {
         this.idUcznia = idUcznia;
@@ -36,6 +33,25 @@ public class Uczen {
 
     public static List<Uczen> getExtension() {
         return extension;
+    }
+
+    public static void readFromFile(String fileName) {
+        try (Scanner fileScanner = new Scanner(new File(fileName))) {
+            fileScanner.nextLine();
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] splittedArray = line.split(";");
+                extension.add(new Uczen(
+                        splittedArray[0],
+                        splittedArray[1],
+                        splittedArray[2],
+                        splittedArray[3],
+                        splittedArray[4],
+                        Klasa.getKlasByIdKlasy(splittedArray[5])));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getNazwisko() {
@@ -60,25 +76,6 @@ public class Uczen {
 
     public String getIdUcznia() {
         return idUcznia;
-    }
-
-    public static void readFromFile() {
-        try (Scanner fileScanner = new Scanner(new File("uczniowie.txt"))) {
-            fileScanner.nextLine();
-            while (fileScanner.hasNextLine()) {
-                String line = fileScanner.nextLine();
-                String[] splittedArray = line.split(";");
-                extension.add(new Uczen(
-                        splittedArray[0],
-                        splittedArray[1],
-                        splittedArray[2],
-                        splittedArray[3],
-                        splittedArray[4],
-                        Klasa.getKlasByIdKlasy(splittedArray[5])));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

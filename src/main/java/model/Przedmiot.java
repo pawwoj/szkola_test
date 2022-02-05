@@ -10,13 +10,10 @@ public class Przedmiot {
 
     private static final List<Przedmiot> extension = new ArrayList<>();
     private final List<Ocena> ocenaList = new ArrayList<>();
-    private String idPrzedmiotu;
-    private String nazwaPrzedmiotu;
-    private String nazwiskoNauczyciela;
-    private String imieNauczyciela;
-
-    public Przedmiot() {
-    }
+    private final String idPrzedmiotu;
+    private final String nazwaPrzedmiotu;
+    private final String nazwiskoNauczyciela;
+    private final String imieNauczyciela;
 
     public Przedmiot(String idPrzedmiotu, String nazwaPrzedmiotu, String nazwiskoNauczyciela, String imieNauczyciela) {
         this.idPrzedmiotu = idPrzedmiotu;
@@ -34,20 +31,8 @@ public class Przedmiot {
         return extension;
     }
 
-    public List<Ocena> getOcenaList() {
-        return ocenaList;
-    }
-
-    public String getNazwaPrzedmiotu() {
-        return nazwaPrzedmiotu;
-    }
-
-    public String getIdPrzedmiotu() {
-        return idPrzedmiotu;
-    }
-
-    public static void readFromFile() {
-        try (Scanner fileScanner = new Scanner(new File("przedmioty.txt"))) {
+    public static void readFromFile(String fileName) {
+        try (Scanner fileScanner = new Scanner(new File(fileName))) {
             fileScanner.nextLine();
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
@@ -61,6 +46,18 @@ public class Przedmiot {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Ocena> getOcenaList() {
+        return ocenaList;
+    }
+
+    public String getNazwaPrzedmiotu() {
+        return nazwaPrzedmiotu;
+    }
+
+    public String getIdPrzedmiotu() {
+        return idPrzedmiotu;
     }
 
     @Override

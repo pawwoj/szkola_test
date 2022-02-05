@@ -6,6 +6,10 @@ import model.Przedmiot;
 import model.Uczen;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import zestawienia.KlasaPlec;
+import zestawienia.PrzedmiotSrednia;
+import zestawienia.UczenPrzedmiot;
+import zestawienia.UczenSrednia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,123 +20,131 @@ class ServiceTest {
 
     @BeforeAll
     public static void setUp() {
-        Przedmiot.readFromFile();
-        Klasa.readFromFile();
-        Uczen.readFromFile();
-        Ocena.readFromFile();
+        Przedmiot.readFromFile("przedmiotyTest.txt");
+        Klasa.readFromFile("uczniowieTest.txt");
+        Uczen.readFromFile("uczniowieTest.txt");
+        Ocena.readFromFile("ocenyTest.txt");
     }
 
     @Test
     void getHowManyStudentsLiveOutsideTheSchoolRegister_shouldSayThatReturnedValueIsNotNull() {
         Service service = new Service();
-        assertThat(service.getHowManyStudentsLiveOutsideTheSchoolRegister()).isNotNull();
+        List<String> ulicePozaRejonemList = new ArrayList<>(List.of("Daleka", "Bardzodaleka"));
+        assertThat(service.getHowManyStudentsLiveOutsideTheSchoolRegister(ulicePozaRejonemList)).isNotNull();
     }
 
     @Test
-    void getHowManyStudentsLiveOutsideTheSchoolRegister_shouldSayThatReturnIntIsEqualTo15() {
+    void getHowManyStudentsLiveOutsideTheSchoolRegister_shouldSayThatReturnIntIsEqualTo4() {
         Service service = new Service();
-        assertThat(service.getHowManyStudentsLiveOutsideTheSchoolRegister()).isEqualTo(15);
+        List<String> ulicePozaRejonemList = new ArrayList<>(List.of("Daleka", "Bardzodaleka"));
+        assertThat(service.getHowManyStudentsLiveOutsideTheSchoolRegister(ulicePozaRejonemList)).isEqualTo(4);
     }
 
     @Test
-    void getAllGradesStudentFromOneSchoolSubject_shouldSayThatReturnedListIsNotEmpty() {
+    void getAllGradesStudentFromOneSchoolSubject_shouldSayThatReturnedListIsNotNull() {
         Service service = new Service();
-        assertThat(service.getAllGradesStudentFromOneSchoolSubject()).isNotNull();
+        String imie = "Edyta";
+        String nazwisko = "Szukana";
+        String przedmiot = "angielski";
+        assertThat(service.getAllGradesStudentFromOneSchoolSubject(imie, nazwisko, przedmiot)).isNotNull();
     }
 
     @Test
-    void getAllGradesStudentFromOneSchoolSubject_shouldSayThatReturnedListHasSize3() {
+    void getAllGradesStudentFromOneSchoolSubject_shouldSayThatReturnedListHasSize4() {
         Service service = new Service();
-        assertThat(service.getAllGradesStudentFromOneSchoolSubject()).hasSize(3);
+        String imie = "Edyta";
+        String nazwisko = "Szukana";
+        String przedmiot = "angielski";
+        assertThat(service.getAllGradesStudentFromOneSchoolSubject(imie, nazwisko, przedmiot)).hasSize(4);
     }
 
     @Test
     void getAllGradesStudentFromOneSchoolSubject_shouldSayThatReturnedListIsEqualToExpectedList() {
         Service service = new Service();
-        List<Integer> expected = new ArrayList<>(List.of(3,1,1));
-        assertThat(service.getAllGradesStudentFromOneSchoolSubject()).isEqualTo(expected);
+        List<Integer> expected = new ArrayList<>(List.of(1, 2, 3, 4));
+        String imie = "Edyta";
+        String nazwisko = "Szukana";
+        String przedmiot = "angielski";
+        assertThat(service.getAllGradesStudentFromOneSchoolSubject(imie, nazwisko, przedmiot)).isEqualTo(expected);
     }
 
     @Test
-    void getCountedGirlsAndBoysInEachClass_shouldSayThatReturnedSetIsNotEmpty() {
+    void getCountedGirlsAndBoysInEachClass_shouldSayThatReturnedListIsNotEmpty() {
         Service service = new Service();
         assertThat(service.getCountedGirlsAndBoysInEachClass()).isNotEmpty();
     }
 
     @Test
-    void getCountedGirlsAndBoysInEachClass_shouldSayThatReturnedSetHasSize15() {
+    void getCountedGirlsAndBoysInEachClass_shouldSayThatReturnedListHasSize3() {
         Service service = new Service();
-        assertThat(service.getCountedGirlsAndBoysInEachClass()).hasSize(15);
+        int expected = 3;
+        assertThat(service.getCountedGirlsAndBoysInEachClass()).hasSize(expected);
     }
 
     @Test
-    void getCountedGirlsAndBoysInEachClass_shouldSayThatReturnedSetContainExpectedList() {
-        List<Object> expected = new ArrayList<>(List.of("1a",26,4));
+    void getCountedGirlsAndBoysInEachClass_shouldSayThatReturnedListIsEqualAsExpectedList() {
+        List<KlasaPlec> expected = new ArrayList<>(List.of(
+                new KlasaPlec("1a", 2, 1),
+                new KlasaPlec("3c", 3, 0),
+                new KlasaPlec("2b", 0, 3)));
         Service service = new Service();
-        assertThat(service.getCountedGirlsAndBoysInEachClass().contains(expected)).isTrue();
+        assertThat(service.getCountedGirlsAndBoysInEachClass().equals(expected)).isTrue();
     }
 
     @Test
     void getGradePointAverageForEachSubject_shouldSayThatReturnedListIsNotEmpty() {
         Service service = new Service();
-        assertThat(service.getGradePointAverageForEachSubject()).isNotEmpty();
+        assertThat(service.getGradePointAverageForEachSubject("3c")).isNotEmpty();
     }
 
     @Test
-    void getGradePointAverageForEachSubject_shouldSayThatReturnedListHasSize11() {
+    void getGradePointAverageForEachSubject_shouldSayThatReturnedListHasSize3() {
         Service service = new Service();
-        assertThat(service.getGradePointAverageForEachSubject()).hasSize(11);
+        assertThat(service.getGradePointAverageForEachSubject("3c")).hasSize(3);
     }
 
     @Test
     void getGradePointAverageForEachSubject_shouldSayThatReturnedListIsSorted() {
         Service service = new Service();
-        assertThat((double) service.getGradePointAverageForEachSubject().get(0).get(1)
-                > (double) service.getGradePointAverageForEachSubject().get(1).get(1)).isTrue();
-    }
-
-    @Test
-    void getGradePointAverageForEachSubject_shouldSayThatReturnedListContainExpectedListAtIndex0() {
-        List<Object> expected = new ArrayList<>(List.of("geografia", 3.25));
-        Service service = new Service();
-        assertThat(service.getGradePointAverageForEachSubject().get(0)).isEqualTo(expected);
+        List<PrzedmiotSrednia> psList = service.getGradePointAverageForEachSubject("3c");
+        assertThat(psList.get(0).getSrednia() > psList.get(1).getSrednia()
+                && psList.get(1).getSrednia() > psList.get(2).getSrednia()).isTrue();
     }
 
     @Test
     void getStudentsWithInsufficientGrade_shouldSayThatReturnedListIsNotEmpty() {
         Service service = new Service();
-        assertThat(service.getStudentsWithInsufficientGrade()).isNotEmpty();
+        assertThat(service.getStudentsWithInsufficientGrade("1a", 1, "2009-05"))
+                .isNotEmpty();
     }
 
     @Test
-    void getStudentsWithInsufficientGrade_shouldSayThatReturnedListHasSize11() {
+    void getStudentsWithInsufficientGrade_shouldSayThatReturnedListHasSize2() {
         Service service = new Service();
-        assertThat(service.getStudentsWithInsufficientGrade()).hasSize(11);
+        assertThat(service.getStudentsWithInsufficientGrade("1a", 1, "2009-05"))
+                .hasSize(2);
     }
 
     @Test
-    void getStudentsWithInsufficientGrade_shouldSayThatReturnedListContainExpectedListAtIndex0() {
-        List<String> expected = new ArrayList<>(List.of("Jadwiga", "Budzik", "geografia"));
+    void getStudentsWithInsufficientGrade_shouldSayThatReturnedListisEqualToExpectedList() {
+        List<UczenPrzedmiot> expected = new ArrayList<>(List.of(
+                new UczenPrzedmiot("Marian", "Berdysow", "niemiecki"),
+                new UczenPrzedmiot("Danuta", "Zaczynska", "angielski")));
         Service service = new Service();
-        assertThat(service.getStudentsWithInsufficientGrade().get(0)).isEqualTo(expected);
+        assertThat(service.getStudentsWithInsufficientGrade("1a", 1, "2009-05")
+                .equals(expected));
     }
 
     @Test
     void getStudentDataWithTheHighestAverageRating_shouldSayThatReturnedListIsNotEmpty() {
         Service service = new Service();
-        assertThat(service.getStudentDataWithTheHighestAverageRating()).isNotEmpty();
+        assertThat(service.getStudentDataWithTheHighestAverageRating()).isNotNull();
     }
 
     @Test
-    void getStudentDataWithTheHighestAverageRating_shouldSayThatReturnedListHasSize4() {
+    void getStudentDataWithTheHighestAverageRating_shouldSayThatReturnedObjectIsEqualToExpected() {
         Service service = new Service();
-        assertThat(service.getStudentDataWithTheHighestAverageRating()).hasSize(4);
-    }
-
-    @Test
-    void getStudentDataWithTheHighestAverageRating_shouldSayThatReturnedListIsEqualToExpectedList() {
-        Service service = new Service();
-        List<Object> expected = new ArrayList<>(List.of("Barbara", "Ogoszewska", "2d", 3.6));
+        UczenSrednia expected = new UczenSrednia("Ten", "Najlepszy", "2b", 4.57);
         assertThat(service.getStudentDataWithTheHighestAverageRating()).isEqualTo(expected);
     }
 }

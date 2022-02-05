@@ -1,0 +1,4 @@
+IDprzedmiotu;NazwaPrzedmiotu;Nazwisko_naucz;Imie_naucz;
+1;polski;Kowalewski;Janusz;
+2;angielski;Nowakowska;Halina;
+3;niemiecki;Bednarek;Alina;
